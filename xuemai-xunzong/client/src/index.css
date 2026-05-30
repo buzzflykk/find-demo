@@ -1,0 +1,140 @@
+@import "tailwindcss";
+@import "./styles/animations.css";
+
+@theme {
+  /* Design Brief: 暖色调白天模式 */
+  --color-brand: #B8860B;
+  --color-primary: #8B6914;
+  --color-primary-light: #D4A843;
+  --color-primary-dark: #6B4F0E;
+  --color-bg: #FFF8F0;
+  --color-bg-card: #FFFDF7;
+  --color-bg-secondary: #F5EDE0;
+  --color-text: #3C2415;
+  --color-text-secondary: #8B7355;
+  --color-text-muted: #C4A882;
+  --color-accent: #D4823C;
+  --color-accent-light: #F0A86E;
+  --color-border: #E8DCC8;
+  --color-border-light: #F0E8D8;
+  --color-success: #6B8E5A;
+  --color-error: #C75B4A;
+  --color-warm-cream: #FFF8F0;
+  --color-warm-brown: #8B6914;
+  --color-warm-amber: #D4A843;
+
+  /* 圆角系统 */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+}
+
+.dark {
+  /* Design Brief: 深蓝夜间模式 */
+  --color-brand: #D4A843;
+  --color-primary: #C49A2C;
+  --color-primary-light: #D4A843;
+  --color-primary-dark: #A07A1E;
+  --color-bg: #1A1C2E;
+  --color-bg-card: #232542;
+  --color-bg-secondary: #2A2D4F;
+  --color-text: #E8E0D8;
+  --color-text-secondary: #A09888;
+  --color-text-muted: #706858;
+  --color-accent: #D4823C;
+  --color-accent-light: #F0A86E;
+  --color-border: #3A3C5E;
+  --color-border-light: #44466A;
+  --color-success: #6B8E5A;
+  --color-error: #C75B4A;
+  --color-warm-cream: #232542;
+  --color-warm-brown: #C49A2C;
+  --color-warm-amber: #D4A843;
+}
+
+/* 基础 */
+html {
+  font-family:
+    "PingFang SC",
+    "Noto Sans SC",
+    "Microsoft YaHei",
+    system-ui,
+    -apple-system,
+    sans-serif;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* 卡片阴影 */
+.card-shadow {
+  box-shadow:
+    0 1px 3px rgba(60, 36, 21, 0.06),
+    0 1px 2px rgba(60, 36, 21, 0.04);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.card-shadow:hover {
+  box-shadow:
+    0 4px 12px rgba(60, 36, 21, 0.1),
+    0 2px 4px rgba(60, 36, 21, 0.06);
+  transform: translateY(-1px);
+}
+
+.dark .card-shadow {
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.2),
+    0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.dark .card-shadow:hover {
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* 按钮基础过渡 */
+button {
+  transition: all 0.15s ease;
+}
+
+/* 骨架屏暖色闪烁 */
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--color-bg-secondary) 25%,
+    var(--color-bg-card) 50%,
+    var(--color-bg-secondary) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+/* 滚动条美化 */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}

@@ -1,0 +1,24 @@
+node_modules/
+dist/
+.env.local
+.env
+.env.*
+*.db
+*.db-shm
+*.db-wal
+*.tsbuildinfo
+*.log
+xuemai-xunzong/server/data/
+xuemai-xunzong/server/uploads/
+.DS_Store
+
+# Local assistant / editor state
+.agents/
+.codex/
+.claude/
+AGENTS.md
+
+# Local screenshots and scratch files
+figma-screenshot.png
+xuemai-xunzong/*-dev.*.log
+xuemai-xunzong/client/vite-dev.log
