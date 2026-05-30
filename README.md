@@ -12,6 +12,12 @@
 6. 进入详情页，私聊提供线索
 7. 消息同步到消息列表
 
+## 在线访问
+
+GitHub Pages 部署完成后，访问：
+
+[https://buzzflykk.github.io/find-demo/](https://buzzflykk.github.io/find-demo/)
+
 ## 项目结构
 
 ```text

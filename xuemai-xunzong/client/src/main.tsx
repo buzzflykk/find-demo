@@ -27,7 +27,7 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider>
       <AuthProvider>
-        <BrowserRouter>
+        <BrowserRouter basename={import.meta.env.BASE_URL}>
           <PhoneFrame>
             <Routes>
             <Route path="/" element={<Splash />} />
