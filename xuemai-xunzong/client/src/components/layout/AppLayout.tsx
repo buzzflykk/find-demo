@@ -1,4 +1,4 @@
-import { Outlet, Navigate, useNavigate } from 'react-router-dom';
+import { Outlet, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import BottomNav from './BottomNav';
 import { useTheme } from '../common/ThemeProvider';
@@ -7,19 +7,8 @@ export default function AppLayout() {
   const { user, loading } = useAuth();
   const { theme, toggle } = useTheme();
   const navigate = useNavigate();
-  const secondaryRoutes = [
-    '/profile',
-    '/notifications',
-    '/my-missing',
-    '/found-archive',
-    '/membership',
-    '/settings',
-  ];
-  const showFab =
-    !location.pathname.startsWith('/publish') &&
-    !location.pathname.startsWith('/missing/') &&
-    !location.pathname.startsWith('/chat/') &&
-    !secondaryRoutes.some(route => location.pathname.startsWith(route));
+  const location = useLocation();
+  const showFab = ['/home', '/explore'].includes(location.pathname);
 
   if (loading) {
     return (
