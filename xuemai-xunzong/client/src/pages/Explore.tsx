@@ -10,6 +10,7 @@ type SearchItem = {
   target_name: string;
   lost_location: string;
   lost_type: string;
+  lost_time?: string;
   view_count: number;
   match_count: number;
   created_at: string;
@@ -36,6 +37,7 @@ const EXPLORE_DEMO_ITEMS: SearchItem[] = [
     target_name: '李明',
     lost_location: '成都 武侯区',
     lost_type: '搬家失联',
+    lost_time: '2005 年小学毕业后',
     view_count: 1286,
     match_count: 3,
     created_at: new Date(Date.now() - 60 * 60 * 1000).toISOString(),
@@ -49,6 +51,7 @@ const EXPLORE_DEMO_ITEMS: SearchItem[] = [
     target_name: '陈阿姨',
     lost_location: '广州 越秀区',
     lost_type: '失联',
+    lost_time: '约 2009 年',
     view_count: 842,
     match_count: 2,
     created_at: new Date(Date.now() - 8 * 60 * 60 * 1000).toISOString(),
@@ -62,6 +65,7 @@ const EXPLORE_DEMO_ITEMS: SearchItem[] = [
     target_name: '豆豆',
     lost_location: '上海 徐汇滨江',
     lost_type: '走失',
+    lost_time: '今天傍晚',
     view_count: 421,
     match_count: 5,
     created_at: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
@@ -75,6 +79,7 @@ const EXPLORE_DEMO_ITEMS: SearchItem[] = [
     target_name: '小雨',
     lost_location: '长沙 开福区',
     lost_type: '其他',
+    lost_time: '童年搬家后',
     view_count: 366,
     match_count: 1,
     created_at: new Date(Date.now() - 26 * 60 * 60 * 1000).toISOString(),
@@ -88,6 +93,7 @@ const EXPLORE_DEMO_ITEMS: SearchItem[] = [
     target_name: '林叔',
     lost_location: '厦门 思明区',
     lost_type: '其他',
+    lost_time: '老小区拆迁后',
     view_count: 509,
     match_count: 4,
     created_at: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
@@ -101,6 +107,7 @@ const EXPLORE_DEMO_ITEMS: SearchItem[] = [
     target_name: '周叔',
     lost_location: '杭州 上城区',
     lost_type: '失联',
+    lost_time: '旧明信片年代不详',
     view_count: 277,
     match_count: 1,
     created_at: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
@@ -179,6 +186,7 @@ export default function Explore() {
           target_name: i.target_name,
           lost_location: lostLocation,
           lost_type: lostType,
+          lost_time: i.lost_time || '',
           view_count: i.view_count || 0,
           match_count: i.match_count || 0,
           created_at: i.created_at,
@@ -316,6 +324,7 @@ export default function Explore() {
               targetName={item.target_name}
               lostLocation={item.lost_location}
               lostType={item.lost_type}
+              lostTime={item.lost_time}
               viewCount={item.view_count}
               matchCount={item.match_count}
               createdAt={item.created_at}
