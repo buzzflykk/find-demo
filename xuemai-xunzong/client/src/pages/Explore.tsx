@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback, type MouseEvent } from 'react';
+﻿import { useState, useEffect, useRef, useCallback, type MouseEvent } from 'react';
 import { api } from '../lib/api';
 import MissingCard from '../components/missing/MissingCard';
 import { getLocalPublishedMissing, mergeMissingItems } from '../services/demoDataStore';
@@ -121,6 +121,31 @@ function inferScenarioTags(text: string) {
   return Array.from(tags);
 }
 
+function filterExploreItems(items: SearchItem[], q: string, scenarioValue: string) {
+  const keyword = q.trim().toLowerCase();
+  return items.filter(item => {
+    const matchScenario = scenarioValue === 'all' || item.scenario_tags?.includes(scenarioValue);
+    const matchKeyword =
+      !keyword ||
+      [item.title, item.target_name, item.lost_location, item.lost_type, item.description]
+        .filter(Boolean)
+        .some(text => String(text).toLowerCase().includes(keyword));
+    return matchScenario && matchKeyword;
+  });
+}
+
+function uniqueExploreItems(items: SearchItem[]) {
+  return items.filter((item, index, arr) => {
+    const signature = `${item.title}-${item.lost_location}-${item.lost_type}`;
+    return (
+      arr.findIndex(next => {
+        const nextSignature = `${next.title}-${next.lost_location}-${next.lost_type}`;
+        return next.id === item.id || nextSignature === signature;
+      }) === index
+    );
+  });
+}
+
 export default function Explore() {
   const [search, setSearch] = useState('');
   const [scenario, setScenario] = useState('all');
@@ -162,29 +187,15 @@ export default function Explore() {
         };
       });
       const localPublished = getLocalPublishedMissing() as SearchItem[];
-      const merged = mergeMissingItems([...mapped, ...EXPLORE_DEMO_ITEMS], localPublished).filter((item, index, arr) => {
-        const signature = `${item.title}-${item.lost_location}-${item.lost_type}`;
-        return (
-          arr.findIndex(next => {
-            const nextSignature = `${next.title}-${next.lost_location}-${next.lost_type}`;
-            return next.id === item.id || nextSignature === signature;
-          }) === index
-        );
-      });
-      const keyword = q.trim().toLowerCase();
-      const filtered = merged.filter(item => {
-        const matchScenario = scenarioValue === 'all' || item.scenario_tags?.includes(scenarioValue);
-        const matchKeyword =
-          !keyword ||
-          [item.title, item.target_name, item.lost_location, item.lost_type, item.description]
-            .filter(Boolean)
-            .some(text => String(text).toLowerCase().includes(keyword));
-        return matchScenario && matchKeyword;
-      });
-      setItems(filtered);
+      const merged = uniqueExploreItems(mergeMissingItems([...mapped, ...EXPLORE_DEMO_ITEMS], localPublished));
+      setItems(filterExploreItems(merged, q, scenarioValue));
       setHasSearched(true);
-    } catch (err: any) {
-      setError(err.message || '搜索失败');
+    } catch {
+      const localPublished = getLocalPublishedMissing() as SearchItem[];
+      const fallbackItems = uniqueExploreItems(mergeMissingItems(EXPLORE_DEMO_ITEMS, localPublished));
+      setItems(filterExploreItems(fallbackItems, q, scenarioValue));
+      setHasSearched(true);
+      setError('');
     } finally {
       setLoading(false);
     }
@@ -360,3 +371,4 @@ export default function Explore() {
     </div>
   );
 }
+
