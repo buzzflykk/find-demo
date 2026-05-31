@@ -50,7 +50,7 @@ export default function Splash() {
         <div className="mb-8 flex items-center justify-between">
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--color-primary)]">
-              AI PM CASE DEMO
+              DEMO
             </p>
             <h1 className="mt-1 text-2xl font-bold text-[var(--color-brand)]">时光印记</h1>
           </div>
@@ -60,7 +60,7 @@ export default function Splash() {
         </div>
 
         <div className="mb-5">
-          <p className="mb-2 text-xs font-medium text-[var(--color-primary)]">C 端产品经理 Demo</p>
+          <p className="mb-2 text-xs font-medium text-[var(--color-primary)]">C 端 Demo</p>
           <h2 className="text-[28px] font-bold leading-tight text-[var(--color-text)]">
             把模糊记忆
             <br />

@@ -37,7 +37,7 @@ export default function AppLayout() {
         <button onClick={() => navigate('/home')} className="text-left">
           <h1 className="text-lg font-bold leading-tight text-[var(--color-brand)]">时光印记</h1>
           <p className="text-[10px] font-medium uppercase tracking-[0.08em] text-[var(--color-text-muted)]">
-            AI PM CASE DEMO
+            DEMO
           </p>
         </button>
         <div className="flex items-center gap-3">

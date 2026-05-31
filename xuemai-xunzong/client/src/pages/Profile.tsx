@@ -68,7 +68,7 @@ export default function Profile() {
             ) : (
               <>
                 <p className="truncate font-semibold text-[var(--color-text)]">{user?.nickname || 'Demo 用户'}</p>
-                <p className="mt-0.5 text-xs text-[var(--color-text-muted)]">AI PM Case Demo 体验账号</p>
+                <p className="mt-0.5 text-xs text-[var(--color-text-muted)]">Demo 体验账号</p>
               </>
             )}
           </div>
