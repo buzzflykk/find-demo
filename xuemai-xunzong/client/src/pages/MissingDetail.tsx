@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { api } from '../lib/api';
 import { shareViaWebAPI, copyLink, getShareUrl } from '../services/share';
@@ -172,8 +172,6 @@ export default function MissingDetail() {
       </div>
 
       <div className="mb-4 flex items-center gap-4 text-xs text-[var(--color-text-muted)]">
-        <span>{item.view_count || 0} 次浏览</span>
-        <span>{item.match_count || 0} 个匹配</span>
         <span>{new Date(item.created_at).toLocaleDateString('zh-CN')} 发布</span>
       </div>
 
@@ -205,3 +203,4 @@ export default function MissingDetail() {
     </div>
   );
 }
+

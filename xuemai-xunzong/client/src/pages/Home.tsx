@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useCallback } from 'react';
+﻿import { useEffect, useState, useRef, useCallback } from 'react';
 import { api } from '../lib/api';
 import MissingCard from '../components/missing/MissingCard';
 import { mergeMissingItems } from '../services/demoDataStore';
@@ -58,41 +58,6 @@ const demoItems: FeedItem[] = [
     created_at: new Date(Date.now() - 1000 * 60 * 60 * 25).toISOString(),
   },
 ];
-
-function DemoCard({ item }: { item: FeedItem }) {
-
-  return (
-    <button
-      type="button"
-      className="mb-3 w-full overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] text-left card-shadow"
-    >
-      <div className="flex aspect-[4/3] w-full items-center justify-center bg-[var(--color-bg-secondary)] px-3 text-center">
-        <div>
-          <p className="text-xs font-medium text-[var(--color-text-muted)]">DEMO CASE</p>
-          <p className="mt-1 text-sm font-semibold leading-snug text-[var(--color-text)]">
-            {item.target_name}
-          </p>
-        </div>
-      </div>
-      <div className="p-3">
-        <h3 className="mb-2 text-sm font-medium leading-snug text-[var(--color-text)]">
-          {item.title}
-        </h3>
-        <div className="mb-2 flex flex-wrap gap-1.5">
-          <span className="rounded-full bg-[var(--color-bg-secondary)] px-2 py-0.5 text-[11px] text-[var(--color-text-secondary)]">
-            {item.lost_location}
-          </span>
-          <span className="rounded-full bg-[var(--color-primary)]/10 px-2 py-0.5 text-[11px] text-[var(--color-primary)]">
-            {item.match_count} 个匹配
-          </span>
-        </div>
-        <p className="text-[11px] leading-relaxed text-[var(--color-text-muted)]">
-          点击进入发布流程，演示 AI 如何把模糊线索变成可传播内容。
-        </p>
-      </div>
-    </button>
-  );
-}
 
 export default function Home() {
   const [items, setItems] = useState<FeedItem[]>([]);
@@ -288,3 +253,4 @@ export default function Home() {
     </div>
   );
 }
+
