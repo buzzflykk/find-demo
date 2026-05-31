@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { api } from '../lib/api';
 import { shareViaWebAPI, copyLink, getShareUrl } from '../services/share';
-import { findLocalPublishedMissing } from '../services/demoDataStore';
+import { findDemoMissingById } from '../services/demoDataStore';
 
 export default function MissingDetail() {
   const { id } = useParams<{ id: string }>();
@@ -16,7 +16,7 @@ export default function MissingDetail() {
     if (!id) return;
     api.getMissingDetail(id)
       .then(setItem)
-      .catch(() => setItem(findLocalPublishedMissing(id)))
+      .catch(() => setItem(findDemoMissingById(id)))
       .finally(() => setLoading(false));
   }, [id]);
 
