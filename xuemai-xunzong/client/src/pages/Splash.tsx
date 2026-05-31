@@ -2,16 +2,16 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 
-const aiSteps = [
-  { title: '线索输入', desc: '老照片 / 旧信件 / 模糊记忆' },
-  { title: 'AI 增强', desc: '修复、OCR、关键词提取' },
-  { title: '传播转化', desc: '生成海报并扩散到社交平台' },
-  { title: '线索匹配', desc: '站内沉淀后持续匹配' },
+const productSteps = [
+  { title: '线索输入', desc: '照片 / 信件 / 文字描述 / 宠物走失' },
+  { title: '信息整理', desc: '补全姓名、地点、时间和场景' },
+  { title: '分享转化', desc: '生成分享卡，方便转发扩散' },
+  { title: '线索反馈', desc: '公共池展示，私聊补充线索' },
 ];
 
 const metrics = [
   { label: '核心路径', value: '6 步' },
-  { label: 'AI 节点', value: '5 个' },
+  { label: '场景线索', value: '5 类' },
   { label: 'MVP 边界', value: 'Mock' },
 ];
 
@@ -60,14 +60,14 @@ export default function Splash() {
         </div>
 
         <div className="mb-5">
-          <p className="mb-2 text-xs font-medium text-[var(--color-primary)]">C 端 AI 产品经理 Demo</p>
+          <p className="mb-2 text-xs font-medium text-[var(--color-primary)]">C 端产品经理 Demo</p>
           <h2 className="text-[28px] font-bold leading-tight text-[var(--color-text)]">
             把模糊记忆
             <br />
             变成可传播线索
           </h2>
           <p className="mt-4 text-sm leading-7 text-[var(--color-text-secondary)]">
-            面向想找回旧友、同学、邻居的年轻用户，用 AI 完成修复、提取、海报生成和线索匹配，让用户从“不知道怎么找”走到“可以发出去并等反馈”。
+            面向想找回旧友、同学、邻居，以及寻找宠物猫狗的用户，把零散照片、文字描述和地点记忆整理成可发布、可传播、可反馈的线索。
           </p>
         </div>
 
@@ -84,7 +84,7 @@ export default function Splash() {
         </div>
 
         <div className="space-y-3">
-          {aiSteps.map((step, index) => (
+          {productSteps.map((step, index) => (
             <div key={step.title} className="flex items-center gap-3">
               <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--color-accent)] text-sm font-bold text-white">
                 {index + 1}
@@ -103,9 +103,6 @@ export default function Splash() {
           </div>
           <p className="text-sm font-medium text-[var(--color-text)]">
             {entering ? '正在进入演示 App...' : '轻点屏幕任意位置开始体验'}
-          </p>
-          <p className="mt-1 text-xs text-[var(--color-text-muted)]">
-            Apple 展示机式开屏，点按即进入可交互原型
           </p>
           {error && (
             <p className="mt-3 rounded-lg bg-[var(--color-error)]/10 px-3 py-2 text-xs text-[var(--color-error)]">
