@@ -18,6 +18,15 @@ interface AuthState {
 
 const AuthContext = createContext<AuthState | null>(null);
 
+const DEMO_USER: User = {
+  id: 'demo-user',
+  nickname: 'Demo 用户',
+  avatar: '',
+  membership: 'free',
+};
+
+const DEMO_TOKEN = 'demo-token';
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
@@ -26,6 +35,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const token = localStorage.getItem('token');
     if (!token) {
       setUser(null);
+      setLoading(false);
+      return;
+    }
+    if (token === DEMO_TOKEN) {
+      setUser(DEMO_USER);
+      localStorage.setItem('userId', DEMO_USER.id);
       setLoading(false);
       return;
     }
@@ -45,6 +60,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login = useCallback(async (phone: string, code: string) => {
     setLoading(true);
     try {
+      if (phone === '13800000000' && code === '123456') {
+        localStorage.setItem('token', DEMO_TOKEN);
+        localStorage.setItem('userId', DEMO_USER.id);
+        setUser(DEMO_USER);
+        return;
+      }
       const { token, userId } = await api.login(phone, code);
       localStorage.setItem('token', token);
       localStorage.setItem('userId', userId);
