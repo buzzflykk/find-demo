@@ -47,7 +47,7 @@ export default function PublicMissingPage() {
     <div className="min-h-full bg-[var(--color-bg)]">
       {/* 简洁顶部条 */}
       <div className="flex items-center justify-between border-b border-[var(--color-border)] bg-[var(--color-bg-card)] px-4 py-3">
-        <span className="text-sm font-medium text-[var(--color-text)]">时光印记 · 寻人</span>
+        <span className="text-sm font-medium text-[var(--color-text)]">线索详情</span>
         <a
           href={window.location.origin}
           className="text-xs text-[var(--color-primary)]"
