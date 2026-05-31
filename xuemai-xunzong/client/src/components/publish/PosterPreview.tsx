@@ -41,83 +41,60 @@ export default function PosterPreview({
 }: Props) {
   const tmpl = templates[templateIndex] || templates[0];
   const hasPhoto = Boolean(photoUrl);
-  const shortName = targetName || '旧友';
-  const yearMatch = lostTime.match(/\d{4}/);
-  const year = yearMatch?.[0] || '未知年份';
-  const location = lostLocation || '未知地点';
-  const descriptionTags = description
-    .split(/[，。、\s]+/)
-    .map(t => t.trim())
-    .filter(Boolean)
-    .slice(0, 3);
-  const clueTags = [year, location, ...descriptionTags].slice(0, 5);
+  const displayName = targetName || '待补充';
+  const displayTime = lostTime || '待补充';
+  const displayLocation = lostLocation || '待补充';
+  const displayReason = description || '请补充失踪经过、最后出现位置、衣着特征或其他可帮助识别的线索。';
 
   return (
     <div className={`overflow-hidden rounded-xl border ${tmpl.border} ${tmpl.bg} shadow-sm`}>
-      <div className="relative flex h-48 items-center justify-center overflow-hidden bg-black/5">
-        {hasPhoto ? (
-          <img src={photoUrl} alt="寻人线索图片" className="h-full w-full object-cover" />
-        ) : (
-          <div className="flex h-full w-full flex-col justify-between p-4">
-            <div className="flex items-start justify-between">
-              <div>
-                <p className={`text-xs font-medium ${tmpl.accent}`}>TEXT CLUE</p>
-                <p className={`mt-1 text-3xl font-bold ${tmpl.text}`}>{year}</p>
-              </div>
-              <div className={`rounded-full border ${tmpl.border} bg-white/45 px-2.5 py-1 text-xs ${tmpl.text}`}>
+      <div className="relative min-h-48 overflow-hidden bg-black/5">
+        {hasPhoto && (
+          <img src={photoUrl} alt="线索图片" className="absolute inset-0 h-full w-full object-cover" />
+        )}
+        <div className={`relative flex min-h-48 flex-col justify-between p-4 ${hasPhoto ? 'bg-black/45 text-white' : ''}`}>
+          <div className="flex items-start justify-between gap-3">
+            <p className={`text-xs font-semibold uppercase tracking-[0.14em] ${hasPhoto ? 'text-white/85' : tmpl.accent}`}>
+              CLUE CARD
+            </p>
+            {!hasPhoto && (
+              <span className={`rounded-full border ${tmpl.border} bg-white/45 px-2.5 py-1 text-xs ${tmpl.text}`}>
                 无照片
-              </div>
-            </div>
-            <div>
-              <p className={`text-sm ${tmpl.text}`}>可能地点</p>
-              <p className={`mt-1 line-clamp-2 text-2xl font-bold leading-tight ${tmpl.accent}`}>
-                {location}
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-1.5">
-              {clueTags.map(tag => (
-                <span
-                  key={tag}
-                  className={`rounded-full border ${tmpl.border} bg-white/50 px-2 py-0.5 text-[11px] ${tmpl.text}`}
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
+              </span>
+            )}
           </div>
-        )}
-      </div>
 
-      <div className="p-4">
-        <h2 className={`mb-2 text-xl font-bold ${tmpl.accent}`}>
-          寻找{shortName}
-        </h2>
-
-        <div className={`mb-3 space-y-1 text-sm ${tmpl.text}`}>
-          {lostTime && (
-            <p>
-              <span className="font-medium">失联时间：</span>
-              {lostTime}
+          <div>
+            <p className={`text-sm ${hasPhoto ? 'text-white/80' : tmpl.text}`}>寻找对象</p>
+            <h2 className={`mt-1 text-3xl font-bold leading-tight ${hasPhoto ? 'text-white' : tmpl.accent}`}>
+              {displayName}
+            </h2>
+            <p className={`mt-4 text-sm ${hasPhoto ? 'text-white/80' : tmpl.text}`}>失联地点</p>
+            <p className={`mt-1 line-clamp-2 text-2xl font-bold leading-tight ${hasPhoto ? 'text-white' : tmpl.text}`}>
+              {displayLocation}
             </p>
-          )}
-          {lostLocation && (
-            <p>
-              <span className="font-medium">失联地点：</span>
-              {lostLocation}
-            </p>
-          )}
-        </div>
-
-        {description && (
-          <p className={`line-clamp-3 text-sm leading-relaxed ${tmpl.text}`}>
-            {description}
-          </p>
-        )}
-
-        <div className={`mt-4 border-t ${tmpl.border} pt-3 text-center text-xs ${tmpl.text}`}>
-          时光印记 · 寻人
+          </div>
         </div>
       </div>
+
+      <div className="space-y-3 p-4">
+        <DetailRow label="名字" value={displayName} textClass={tmpl.text} />
+        <DetailRow label="时间" value={displayTime} textClass={tmpl.text} />
+        <DetailRow label="地点" value={displayLocation} textClass={tmpl.text} />
+        <div className={`rounded-lg border ${tmpl.border} bg-white/35 p-3`}>
+          <p className={`mb-1 text-xs font-medium ${tmpl.accent}`}>详细失踪原因</p>
+          <p className={`text-sm leading-6 ${tmpl.text}`}>{displayReason}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function DetailRow({ label, value, textClass }: { label: string; value: string; textClass: string }) {
+  return (
+    <div className={`flex items-start gap-3 text-sm ${textClass}`}>
+      <span className="shrink-0 text-xs text-[var(--color-text-muted)]">{label}</span>
+      <span className="font-medium leading-5">{value}</span>
     </div>
   );
 }
