@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+﻿import { useState, useCallback } from 'react';
 import { api } from '../lib/api';
 import { mockGeneratePoster, mockOCR, mockPhotoRestore, type MockKeywordItem } from '../services/ai-mock';
 import { saveLocalPublishedMissing } from '../services/demoDataStore';
@@ -44,6 +44,34 @@ function fileToDataUrl(file: File): Promise<string> {
   });
 }
 
+async function imageFileToPreviewUrl(file: File): Promise<string> {
+  const rawDataUrl = await fileToDataUrl(file);
+
+  return new Promise(resolve => {
+    const image = new Image();
+    image.onload = () => {
+      const maxSide = 1200;
+      const scale = Math.min(1, maxSide / Math.max(image.width, image.height));
+      const width = Math.max(1, Math.round(image.width * scale));
+      const height = Math.max(1, Math.round(image.height * scale));
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+
+      if (!ctx) {
+        resolve(rawDataUrl);
+        return;
+      }
+
+      ctx.drawImage(image, 0, 0, width, height);
+      resolve(canvas.toDataURL('image/jpeg', 0.78));
+    };
+    image.onerror = () => resolve(rawDataUrl);
+    image.src = rawDataUrl;
+  });
+}
+
 export function usePublish() {
   const [step, setStep] = useState(1);
   const [data, setData] = useState<PublishData>(initialData);
@@ -59,13 +87,13 @@ export function usePublish() {
   }, []);
 
   const addPhoto = useCallback(async (file: File) => {
-    const localPreview = await fileToDataUrl(file);
+    const localPreview = await imageFileToPreviewUrl(file);
     setData(d => ({ ...d, photos: [...d.photos, localPreview] }));
     return localPreview;
   }, []);
 
   const addLetter = useCallback(async (file: File) => {
-    const localPreview = await fileToDataUrl(file);
+    const localPreview = await imageFileToPreviewUrl(file);
     setData(d => ({ ...d, letters: [...d.letters, localPreview] }));
     return localPreview;
   }, []);
@@ -161,18 +189,22 @@ export function usePublish() {
       setPublishedId(publishedResultId);
       setStep(6);
     } catch {
-      saveLocalPublishedMissing({
-        id: fallbackId,
-        user_id: 'demo-user',
-        ...payload,
-        status: 'active',
-        view_count: 0,
-        match_count: 0,
-        created_at: new Date().toISOString(),
-      });
-      setPublishedId(fallbackId);
-      setPublishError('演示数据已保存到本机。');
-      setStep(6);
+      try {
+        saveLocalPublishedMissing({
+          id: fallbackId,
+          user_id: 'demo-user',
+          ...payload,
+          status: 'active',
+          view_count: 0,
+          match_count: 0,
+          created_at: new Date().toISOString(),
+        });
+        setPublishedId(fallbackId);
+        setPublishError('演示数据已保存到本机。');
+        setStep(6);
+      } catch {
+        setPublishError('图片保存失败：本机存储空间不足，请换一张较小的图片后重试。');
+      }
     } finally {
       setPublishing(false);
     }
@@ -213,3 +245,4 @@ export function usePublish() {
     setStep,
   };
 }
+
